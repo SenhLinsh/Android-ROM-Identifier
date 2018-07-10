@@ -2,7 +2,8 @@ package com.linsh.rom;
 
 import android.text.TextUtils;
 
-import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * <pre>
@@ -30,22 +31,23 @@ class MiuiChecker extends Checker {
     }
 
     @Override
-    public ROMInfo checkBuildProp(Properties properties) {
+    public ROMInfo checkBuildProp(RomProperties properties) throws Exception {
         ROMInfo info = null;
-        if (properties.containsKey(BuildPropKeyList.MIUI_VERSION_NANE)) {
-            String versionName = properties.getProperty(BuildPropKeyList.MIUI_VERSION_NANE);
-            if (!TextUtils.isEmpty(versionName) && versionName.matches("[Vv]\\d+")) { // V9
-                try {
-                    info = new ROMInfo(getRom());
-                    info.setBaseVersion(Integer.parseInt(versionName.substring(1)));
+        String versionName = properties.getProperty(BuildPropKeyList.MIUI_VERSION_NANE);
+        if (!TextUtils.isEmpty(versionName) && versionName.matches("[Vv]\\d+")) { // V9
+            try {
+                info = new ROMInfo(getRom());
+                info.setBaseVersion(Integer.parseInt(versionName.substring(1)));
 
-                    String versionStr = properties.getProperty(BuildPropKeyList.MIUI_VERSION);
-                    if (!TextUtils.isEmpty(versionStr) && versionStr.matches("[\\d.]+")) { // 8.1.25
-                        info.setVersion(versionStr);
+                String versionStr = properties.getProperty(BuildPropKeyList.MIUI_VERSION);
+                if (!TextUtils.isEmpty(versionStr)) {
+                    Matcher matcher = Pattern.compile("[Vv](\\d(.\\d+)*)[.A-Za-z]*").matcher(versionStr); // 8.1.25 & V9.6.2.0.ODECNFD
+                    if (matcher.matches()) {
+                        info.setVersion(matcher.group(1));
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
         return info;

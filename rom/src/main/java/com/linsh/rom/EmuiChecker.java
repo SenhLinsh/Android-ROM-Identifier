@@ -2,7 +2,6 @@ package com.linsh.rom;
 
 import android.text.TextUtils;
 
-import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -30,13 +29,14 @@ public class EmuiChecker extends Checker {
         return ROM.EMUI;
     }
 
+
     @Override
-    public ROMInfo checkBuildProp(Properties properties) {
+    public ROMInfo checkBuildProp(RomProperties properties) throws Exception {
         ROMInfo info = null;
-        if (properties.containsKey(BuildPropKeyList.EMUI_VERSION)) {
-            String versionStr = properties.getProperty(BuildPropKeyList.EMUI_VERSION);
+        String versionStr = properties.getProperty(BuildPropKeyList.EMUI_VERSION);
+        if (!TextUtils.isEmpty(versionStr)) {
             Matcher matcher = Pattern.compile("EmotionUI_([\\d.]+)").matcher(versionStr); // EmotionUI_3.0
-            if (!TextUtils.isEmpty(versionStr) && matcher.find()) {
+            if (matcher.find()) {
                 try {
                     String version = matcher.group(1);
                     info = new ROMInfo(getRom());

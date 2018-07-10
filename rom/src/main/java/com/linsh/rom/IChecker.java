@@ -2,7 +2,6 @@ package com.linsh.rom;
 
 import android.content.Context;
 
-import java.util.Properties;
 import java.util.Set;
 
 /**
@@ -23,5 +22,5 @@ public interface IChecker {
 
     boolean checkApplication(Set<String> installedPackages);
 
-    ROMInfo checkBuildProp(Properties properties);
+    ROMInfo checkBuildProp(RomProperties properties) throws Exception;
 }

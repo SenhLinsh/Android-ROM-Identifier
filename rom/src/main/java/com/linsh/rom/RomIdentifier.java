@@ -94,42 +94,50 @@ public class RomIdentifier {
         ROM rom = getRomType(context);
 
         IChecker[] checkers = getICheckers();
+        RomProperties properties = new RomProperties();
 
-        FileInputStream is = null;
-        try {
-            // 获取 build.prop 配置
-            Properties buildProperties = new Properties();
-            is = new FileInputStream(new File(Environment.getRootDirectory(), "build.prop"));
-            buildProperties.load(is);
-
-            // 检查配置
-            for (int i = 0; i < checkers.length; i++) {
-                if (rom == checkers[i].getRom()) {
-                    if (i != 0) {
-                        IChecker temp = checkers[0];
-                        checkers[0] = checkers[i];
-                        checkers[i] = temp;
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            FileInputStream is = null;
+            try {
+                // 获取 build.prop 配置
+                Properties buildProperties = new Properties();
+                is = new FileInputStream(new File(Environment.getRootDirectory(), "build.prop"));
+                buildProperties.load(is);
+                properties.setBuildProp(buildProperties);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                if (is != null) {
+                    try {
+                        is.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                    break;
-                }
-            }
-            ROMInfo temp;
-            for (IChecker checker : checkers) {
-                if ((temp = checker.checkBuildProp(buildProperties)) != null) {
-                    return temp;
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (is != null) {
-                try {
-                    is.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
                 }
             }
         }
+        // 检查配置
+        for (int i = 0; i < checkers.length; i++) {
+            if (rom == checkers[i].getRom()) {
+                if (i != 0) {
+                    IChecker temp = checkers[0];
+                    checkers[0] = checkers[i];
+                    checkers[i] = temp;
+                }
+                break;
+            }
+        }
+        try {
+            ROMInfo temp;
+            for (IChecker checker : checkers) {
+                if ((temp = checker.checkBuildProp(properties)) != null) {
+                    return temp;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return new ROMInfo(rom);
     }
+
 }

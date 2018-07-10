@@ -2,7 +2,6 @@ package com.linsh.rom;
 
 import android.text.TextUtils;
 
-import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -32,12 +31,12 @@ public class FlymeChecker extends Checker {
     }
 
     @Override
-    public ROMInfo checkBuildProp(Properties properties) {
+    public ROMInfo checkBuildProp(RomProperties properties) throws Exception {
         ROMInfo info = new ROMInfo(getRom());
-        if (properties.containsKey(BuildPropKeyList.FLYME_DISPLAY_ID)) {
-            String versionStr = properties.getProperty(BuildPropKeyList.FLYME_DISPLAY_ID);
+        String versionStr = properties.getProperty(BuildPropKeyList.FLYME_DISPLAY_ID);
+        if (!TextUtils.isEmpty(versionStr)) {
             Matcher matcher = Pattern.compile("Flyme[^\\d]*([\\d.]+)[^\\d]*").matcher(versionStr); // Flyme OS 4.5.4.2U
-            if (!TextUtils.isEmpty(versionStr) && matcher.find()) {
+            if (matcher.find()) {
                 try {
                     String version = matcher.group(1);
                     info.setVersion(version);

@@ -2,7 +2,6 @@ package com.linsh.rom;
 
 import android.text.TextUtils;
 
-import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -31,12 +30,12 @@ public class EuiChecker extends Checker {
     }
 
     @Override
-    public ROMInfo checkBuildProp(Properties properties) {
+    public ROMInfo checkBuildProp(RomProperties properties) throws Exception {
         ROMInfo info = null;
-        if (properties.containsKey(BuildPropKeyList.EUI_VERSION)) {
-            String versionStr = properties.getProperty(BuildPropKeyList.EUI_VERSION);
+        String versionStr = properties.getProperty(BuildPropKeyList.EUI_VERSION);
+        if (!TextUtils.isEmpty(versionStr)) {
             Matcher matcher = Pattern.compile("([\\d.]+)[^\\d]*").matcher(versionStr); // 5.9.023S
-            if (!TextUtils.isEmpty(versionStr) && matcher.find()) {
+            if (matcher.find()) {
                 try {
                     String version = matcher.group(1);
                     info.setVersion(version);

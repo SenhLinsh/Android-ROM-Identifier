@@ -2,8 +2,6 @@ package com.linsh.rom;
 
 import android.text.TextUtils;
 
-import java.util.Properties;
-
 /**
  * <pre>
  *    author : Senh Linsh
@@ -29,18 +27,16 @@ public class FuntouchOsChecker extends Checker {
     }
 
     @Override
-    public ROMInfo checkBuildProp(Properties properties) {
+    public ROMInfo checkBuildProp(RomProperties properties) throws Exception {
         ROMInfo info = null;
-        if (properties.containsKey(BuildPropKeyList.FUNTOUCHOS_OS_VERSION)) {
-            String versionStr = properties.getProperty(BuildPropKeyList.FUNTOUCHOS_OS_VERSION);
-            if (!TextUtils.isEmpty(versionStr) && versionStr.matches("[\\d.]+")) { // 3.0
-                try {
-                    info = new ROMInfo(getRom());
-                    info.setVersion(versionStr);
-                    info.setBaseVersion(Integer.parseInt(versionStr.split("\\.")[0]));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        String versionStr = properties.getProperty(BuildPropKeyList.FUNTOUCHOS_OS_VERSION);
+        if (!TextUtils.isEmpty(versionStr) && versionStr.matches("[\\d.]+")) { // 3.0
+            try {
+                info = new ROMInfo(getRom());
+                info.setVersion(versionStr);
+                info.setBaseVersion(Integer.parseInt(versionStr.split("\\.")[0]));
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
         return info;
