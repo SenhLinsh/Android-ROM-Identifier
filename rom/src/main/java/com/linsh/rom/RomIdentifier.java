@@ -90,7 +90,7 @@ public class RomIdentifier {
         return sRomInfo;
     }
 
-    public static ROMInfo doGetRomInfo(Context context) {
+    private static ROMInfo doGetRomInfo(Context context) {
         ROM rom = getRomType(context);
 
         IChecker[] checkers = getICheckers();

@@ -38,17 +38,14 @@ class MiuiChecker extends Checker {
                 try {
                     info = new ROMInfo(getRom());
                     info.setBaseVersion(Integer.parseInt(versionName.substring(1)));
+
+                    String versionStr = properties.getProperty(BuildPropKeyList.MIUI_VERSION);
+                    if (!TextUtils.isEmpty(versionStr) && versionStr.matches("[\\d.]+")) { // 8.1.25
+                        info.setVersion(versionStr);
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            }
-        }
-        if (properties.containsKey(BuildPropKeyList.MIUI_VERSION)) {
-            String versionStr = properties.getProperty(BuildPropKeyList.MIUI_VERSION);
-            if (!TextUtils.isEmpty(versionStr) && versionStr.matches("[\\d.]+")) { // 8.1.25
-                if (info == null)
-                    info = new ROMInfo(getRom());
-                info.setVersion(versionStr);
             }
         }
         return info;
