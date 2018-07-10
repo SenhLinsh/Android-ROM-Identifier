@@ -21,7 +21,7 @@ public abstract class Checker implements IChecker {
 
     @Override
     public boolean checkManufacturer(String manufacturer) {
-        return manufacturer.equals(getManufacturer());
+        return manufacturer.equalsIgnoreCase(getManufacturer());
     }
 
     @Override
