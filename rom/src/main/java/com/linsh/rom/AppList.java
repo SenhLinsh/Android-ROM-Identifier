@@ -10,8 +10,36 @@ package com.linsh.rom;
  */
 interface AppList {
 
-    String[] MIUI_APPS = {"com.miui.home", "com.miui.core", "com.miui.rom", "com.miui.system"};
-    String[] FLYME_APPS = {};
+    String[] MIUI_APPS = {
+            "com.miui.home"                // 系统桌面
+            , "com.miui.core"              // MIUI SDK
+            , "com.miui.rom"               // com.miui.rom
+            , "com.miui.system"            // com.miui.system
+            , "com.xiaomi.bluetooth"       // MIUI Bluetooth
+            , "com.miui.securitycenter"    // 安全中心
+            , "com.miui.cloudservice"      // 小米云服务
+            , "com.miui.backup"            // 备份
+            , "com.android.camera"         // 相机
+            , "com.miui.gallery"           // 相册
+            , "com.miui.player"            // 音乐
+    };
+
+    String[] FLYME_APPS = {
+            "com.meizu.flyme.launcher"     // Flyme桌面
+            , "com.meizu.filemanager"      // 文件管理
+            , "com.meizu.backup"           // 备份与恢复
+            , "com.meizu.flyme.update"     // 系统更新
+            , "com.meizu.media.camera"     // 相机
+            , "com.meizu.mstore"           // 应用商店
+            , "com.meizu.safe"             // 手机管家
+            , "com.meizu.setup"            // 开机引导
+            , "com.android.settings"       // 设置
+            , "com.meizu.media.music"      // 音乐
+            , "com.meizu.media.video"      // 视频
+            , "com.meizu.media.gallery"    // 图库
+            , "com.meizu.flyme.input"      // 系统输入法
+    };
+
     String[] EMUI_APPS = {};
     String[] COLOR_OS_APPS = {};
     String[] FUNTOUCH_OS_APPS = {};
