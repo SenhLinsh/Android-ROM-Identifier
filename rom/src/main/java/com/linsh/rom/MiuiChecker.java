@@ -41,7 +41,7 @@ class MiuiChecker extends Checker {
 
                 String versionStr = properties.getProperty(BuildPropKeyList.MIUI_VERSION);
                 if (!TextUtils.isEmpty(versionStr)) {
-                    Matcher matcher = Pattern.compile("[Vv](\\d(.\\d+)*)[.A-Za-z]*").matcher(versionStr); // 8.1.25 & V9.6.2.0.ODECNFD
+                    Matcher matcher = Pattern.compile("[Vv]?(\\d(.\\d+)*)[.A-Za-z]*").matcher(versionStr); // 8.1.25 & V9.6.2.0.ODECNFD
                     if (matcher.matches()) {
                         info.setVersion(matcher.group(1));
                     }
