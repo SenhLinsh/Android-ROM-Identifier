@@ -53,7 +53,19 @@ interface AppList {
     String[] YUN_OS_APPS = {};
     String[] YULONG_APPS = {};
     String[] SAMSUNG_APPS = {};
-    String[] SONY_APPS = {};
+
+    String[] SONY_APPS = {
+            "com.sonyericsson.settings"         // 设定
+            , "com.sonymobile.android.contacts" // 通讯录
+            , "com.sonymobile.support"          // 支持
+            , "com.sonymobile.synchub"          // 备份和恢复
+            , "com.sonyericsson.android.camera" // 相机
+            , "com.sonyericsson.album"          // 相册
+            , "com.sonyericsson.music"          // 音乐
+            , "com.sonymobile.calendar"         // 日历
+            , "com.sonymobile.android.dialer"   // 电话
+    };
+
     String[] LENOVO_APPS = {};
     String[] LG_APPS = {};
     String[] GOOGLE_APPS = {};
