@@ -1,5 +1,7 @@
 package com.linsh.rom;
 
+import android.util.Log;
+
 import java.lang.reflect.Method;
 import java.util.Properties;
 
@@ -31,8 +33,14 @@ class RomProperties {
     }
 
     private static String getSystemProperty(String key) throws Exception {
-        Class<?> clz = Class.forName("android.os.SystemProperties");
-        Method get = clz.getMethod("get", String.class, String.class);
-        return (String) get.invoke(clz, key, null);
+        try {
+            Class<?> clz = Class.forName("android.os.SystemProperties");
+            Method get = clz.getMethod("get", String.class, String.class);
+            return (String) get.invoke(clz, key, null);
+        } catch (Exception e) {
+            Log.e(RomProperties.class.getSimpleName(),
+                    "反射获取 build.prop 属性 " + key + " 失败", e);
+        }
+        return null;
     }
 }
